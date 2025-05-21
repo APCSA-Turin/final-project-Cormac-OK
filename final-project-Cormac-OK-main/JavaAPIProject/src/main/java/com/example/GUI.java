@@ -39,13 +39,13 @@ public class GUI{
         JPanel panel = new JPanel(new GridLayout(4, 1)); //create the JPanel object
         //Jpanel is like a tray that you put things on and then you put the whole tray into your window
         //this panel holds a title, input field, button, and output area
-        // panel.add(titleLabel);
-        // panel.add(inputField);
-        // panel.add(fetchButton);
-        // panel.add(outputArea);
+        panel.add(titleLabel);
+        panel.add(inputField);
+        panel.add(fetchButton);
+        panel.add(outputArea);
 
         //We have added components to our panel, then we add the PANEL to our FRAME
-        // frame.add(panel); 
+        frame.add(panel); 
 
 
 
