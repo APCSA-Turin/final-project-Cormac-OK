@@ -1,8 +1,6 @@
 package com.example;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 /**
  * Hello world!
  *
@@ -10,11 +8,11 @@ import org.json.JSONObject;
 public class App 
 {
 
-    private static ArrayList<Image> images;
+    private static ArrayList<MarsPhoto> images;
 
 
-    public static Image getRandomImage(){
-        return new Image(null, null, null, 0);
+    public static MarsPhoto getRandomImage(){
+        return new MarsPhoto(null, null, null, 0);
     }
     public static void main( String[] args )
     {

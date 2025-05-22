@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RandomImage {
-    private ArrayList<Image> images;
+    private ArrayList<MarsPhoto> images;
     private ArrayList<Integer> visitedIndices;
     private int day;
 
@@ -26,7 +26,7 @@ public class RandomImage {
         }
     }
 
-    public Image randomImage(){
+    public MarsPhoto randomImage(){
         if(visitedIndices.size() == images.size()){
             newDay();
         }
@@ -38,14 +38,14 @@ public class RandomImage {
         return images.get(index);
     }
 
-    public static ArrayList<Image> parseJson(String data){
+    public static ArrayList<MarsPhoto> parseJson(String data){
         JSONObject dataJSON = new JSONObject(data);
         JSONArray photosJSON = dataJSON.getJSONArray("photos");
-        ArrayList<Image> photosObj = new ArrayList<>();
+        ArrayList<MarsPhoto> photosObj = new ArrayList<>();
 
         for(int i = 0; i < photosJSON.length(); i++){
             JSONObject photo = photosJSON.getJSONObject(i);
-            photosObj.add(new Image(
+            photosObj.add(new MarsPhoto(
                 photo.getString("img_src"),
                 photo.getJSONObject("camera").getString("full_name"),
                 photo.getString("earth_date"),
