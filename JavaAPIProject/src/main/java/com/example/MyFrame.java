@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
+import javax.imageio.ImageIO;
 
 public class MyFrame extends JFrame implements ActionListener {
 
@@ -20,15 +22,21 @@ public class MyFrame extends JFrame implements ActionListener {
     private JPanel imageViewer = new JPanel(new BorderLayout());
     private JButton back = new JButton("Back");
     private JLabel imagePlaceHolder = new JLabel("IMAAAGE");
-    private  JTextArea ratingSlot = new JTextArea("_______");
+
+    private JPanel ratingPanel = new JPanel(new GridLayout(1,2));
+    private JLabel ratingLabel = new JLabel("Enter a rating from 1-5:");
+    private  JTextArea ratingSlot = new JTextArea("");
     private  JButton nextPhotoButton = new JButton("Next Photo");
+
+    private Image image;
+
 
     private RandomImage randomImage = new RandomImage(2);
     private MarsPhoto currentPhoto;
 
     public MyFrame(){
         super("RoverPics");
-        super.setSize(400, 200);
+        super.setSize(1600, 200);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setLayout(new FlowLayout());
 
@@ -37,12 +45,27 @@ public class MyFrame extends JFrame implements ActionListener {
         mainMenu.add(likedPhotosButton);
         mainMenu.add(statsButton);
 
+        ratingSlot.setPreferredSize(new Dimension(50, 8));
+        ratingPanel.add(ratingLabel, 0);
+        ratingPanel.add(ratingSlot, 1);
+
         imageViewer.add(back, BorderLayout.PAGE_START);
         imageViewer.add(imagePlaceHolder, BorderLayout.CENTER);
-        imageViewer.add(ratingSlot, BorderLayout.LINE_START);
+        imageViewer.add(ratingPanel, BorderLayout.LINE_START);
         imageViewer.add(nextPhotoButton, BorderLayout.LINE_END);
 
         imageViewer.setVisible(false);
+
+        try{
+            URL url = new URL("http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00002/opgs/edr/ncam/NRA_397681398EDR_F0020000AUT_04096M_.JPG");
+            // URL url = new URL("https://images.dog.ceo/breeds/terrier-american/pan-pan.jpg");
+            image = ImageIO.read(url);
+            imageViewer.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
+        }
+        catch(Exception e){
+            System.out.println("Uh Oh");
+        }
+        
 
 
         back.addActionListener(this);
@@ -90,6 +113,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
         currentPhoto = randomImage.randomImage();
         imagePlaceHolder.setText(currentPhoto.toString());
+        System.out.println(currentPhoto);
     }
 
 }
