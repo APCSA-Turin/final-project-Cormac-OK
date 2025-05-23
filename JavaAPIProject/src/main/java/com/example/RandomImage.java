@@ -1,5 +1,10 @@
 package com.example;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,6 +40,7 @@ public class RandomImage {
             index = (int)(Math.random() * images.size());
         }
         visitedIndices.add(index);
+
         return images.get(index);
     }
 
@@ -54,5 +60,7 @@ public class RandomImage {
         }
         return photosObj;
     }
+
+
 
 }
