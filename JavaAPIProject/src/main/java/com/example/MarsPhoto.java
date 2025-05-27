@@ -2,6 +2,7 @@ package com.example;
 
 public class MarsPhoto {
     
+    
     private String URL;
     private String camera;
     private String date;

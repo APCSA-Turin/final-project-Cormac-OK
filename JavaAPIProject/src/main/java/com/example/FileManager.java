@@ -6,6 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileManager {
+    /**
+     * 
+     * @param data
+     */
     public static void saveData(String data) {
         try (FileWriter writer = new FileWriter("JavaAPIProject//src//main//java//com//example//data//ApiCall.txt")) {
             writer.write(data);
