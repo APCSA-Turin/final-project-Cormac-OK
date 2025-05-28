@@ -6,6 +6,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class API {
+    /**
+     * Gets a JSON object with all the data
+     * @param sol the date requested
+     * @return
+     * @throws Exception
+     */
     public static String getData(int sol) throws Exception {
         /*endpoint is a url (string) that you get from an API website*/
         URL url = new URL("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol="+ sol +"&api_key=0GF1YPkpkVtgo0DE7XvcilfMofBuGSQ6HTvt9S0t");

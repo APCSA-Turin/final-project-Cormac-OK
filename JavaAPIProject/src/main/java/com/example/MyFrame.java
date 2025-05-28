@@ -15,7 +15,7 @@ public class MyFrame extends JFrame implements ActionListener {
         new MyFrame();
     }
 
-    private JPanel mainMenu = new JPanel(new GridLayout(2,2));
+    private JPanel mainMenu = new JPanel(new GridLayout(3,2));
     private JButton browseRandomButton = new JButton("Browse Random");
     private JButton browseRecommendedButton = new JButton("Browse Recommended");
     private JButton likedPhotosButton = new JButton("View Liked Photos");
@@ -23,6 +23,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     private JPanel imageViewer = new JPanel(new BorderLayout());
     private JButton back = new JButton("Back");
+    // private JLabel imgLabel = new JLabel(new ImageIcon("JavaAPIProject\\src\\main\\java\\com\\example\\dog.jpg"));
     private JLabel imgLabel = new JLabel();
 
     private JPanel ratingPanel = new JPanel(new GridLayout(4,1));
@@ -49,6 +50,7 @@ public class MyFrame extends JFrame implements ActionListener {
         mainMenu.add(browseRecommendedButton);
         mainMenu.add(likedPhotosButton);
         mainMenu.add(statsButton);
+        mainMenu.add(imgLabel);
 
         ratingSlot.setPreferredSize(new Dimension(50, 8));
         ratingPanel.add(ratingLabel, 0);
@@ -100,8 +102,6 @@ public class MyFrame extends JFrame implements ActionListener {
             newPhoto();
         }
         else if(e.getActionCommand().equals("Refresh")){
-            imgLabel = new JLabel(new ImageIcon(currentPhoto.getPath()));
-            System.out.println(currentPhoto.getPath());
         }
     }
 
@@ -112,9 +112,17 @@ public class MyFrame extends JFrame implements ActionListener {
         catch (Exception e){
             System.out.println("Invalid Rating");
         }
-        currentPhoto = randomImage.randomImage();
-        imgLabel = new JLabel(new ImageIcon(currentPhoto.getPath()));
-        System.out.println(imgLabel);
+        // currentPhoto = randomImage.randomImage();
+        // imgLabel = new JLabel(new ImageIcon(currentPhoto.getPath()));
+
+        ImageIcon image = new ImageIcon("JavaAPIProject\\src\\main\\java\\com\\example\\dog.jpg");
+        imgLabel = new JLabel(image);
+        imgLabel.setVisible(true);
+        imgLabel.repaint();
+        imageViewer.add(imgLabel, BorderLayout.CENTER);
+        
+        System.out.println("image:" + image);
+        System.out.println("image label:" + imgLabel);
         System.out.println(currentPhoto);
     }
 
