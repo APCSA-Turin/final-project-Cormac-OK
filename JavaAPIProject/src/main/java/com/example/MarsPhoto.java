@@ -2,11 +2,11 @@ package com.example;
 
 public class MarsPhoto {
     
-    
     private String URL;
     private String camera;
     private String date;
     private int id;
+    private String path;
     private int rating;
 
     /**
@@ -17,7 +17,12 @@ public class MarsPhoto {
      * @param id The image's unique idea.
      */
     public MarsPhoto(String URL, String camera, String date, int id){
-        this.URL = URL;
+        if(URL.charAt(4) != 's'){
+            this.URL = URL.substring(0,4) + "s" + URL.substring(4);
+        }
+        else{
+            this.URL = URL;
+        }
         this.camera = camera;
         this.date = date;
         this.id = id;
@@ -45,6 +50,14 @@ public class MarsPhoto {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override

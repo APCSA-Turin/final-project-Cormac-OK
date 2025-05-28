@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
@@ -21,12 +23,15 @@ public class MyFrame extends JFrame implements ActionListener {
 
     private JPanel imageViewer = new JPanel(new BorderLayout());
     private JButton back = new JButton("Back");
-    private JLabel imagePlaceHolder = new JLabel("IMAAAGE");
+    private JLabel imgLabel = new JLabel();
 
-    private JPanel ratingPanel = new JPanel(new GridLayout(1,2));
+    private JPanel ratingPanel = new JPanel(new GridLayout(4,1));
     private JLabel ratingLabel = new JLabel("Enter a rating from 1-5:");
     private  JTextArea ratingSlot = new JTextArea("");
+    private JButton refresh = new JButton("Refresh");
     private  JButton nextPhotoButton = new JButton("Next Photo");
+
+    private JLabel testPic = new JLabel(new ImageIcon("com/example/data/49193.jpg"));
 
     private Image image;
 
@@ -36,10 +41,10 @@ public class MyFrame extends JFrame implements ActionListener {
 
     public MyFrame(){
         super("RoverPics");
-        super.setSize(1600, 200);
+        super.setSize(1600, 800);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        super.setLayout(new FlowLayout());
 
+        mainMenu.setSize(super.getSize());
         mainMenu.add(browseRandomButton);
         mainMenu.add(browseRecommendedButton);
         mainMenu.add(likedPhotosButton);
@@ -48,24 +53,16 @@ public class MyFrame extends JFrame implements ActionListener {
         ratingSlot.setPreferredSize(new Dimension(50, 8));
         ratingPanel.add(ratingLabel, 0);
         ratingPanel.add(ratingSlot, 1);
+        ratingPanel.add(refresh, 2);
+        ratingPanel.add(testPic, 3);
 
         imageViewer.add(back, BorderLayout.PAGE_START);
-        imageViewer.add(imagePlaceHolder, BorderLayout.CENTER);
         imageViewer.add(ratingPanel, BorderLayout.LINE_START);
         imageViewer.add(nextPhotoButton, BorderLayout.LINE_END);
+        imageViewer.add(imgLabel, BorderLayout.CENTER);
 
         imageViewer.setVisible(false);
 
-        try{
-            URL url = new URL("http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00002/opgs/edr/ncam/NRA_397681398EDR_F0020000AUT_04096M_.JPG");
-            // URL url = new URL("https://images.dog.ceo/breeds/terrier-american/pan-pan.jpg");
-            image = ImageIO.read(url);
-            imageViewer.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
-        }
-        catch(Exception e){
-            System.out.println("Uh Oh");
-        }
-        
 
 
         back.addActionListener(this);
@@ -74,6 +71,7 @@ public class MyFrame extends JFrame implements ActionListener {
         likedPhotosButton.addActionListener(this);
         statsButton.addActionListener(this);
         nextPhotoButton.addActionListener(this);
+        refresh.addActionListener(this);
 
         super.add(mainMenu);
         super.add(imageViewer);
@@ -101,10 +99,13 @@ public class MyFrame extends JFrame implements ActionListener {
             System.out.println("Next");
             newPhoto();
         }
+        else if(e.getActionCommand().equals("Refresh")){
+            imgLabel = new JLabel(new ImageIcon(currentPhoto.getPath()));
+            System.out.println(currentPhoto.getPath());
+        }
     }
 
     public void newPhoto(){
-        System.out.println("NEw photo");
         try{
             currentPhoto.setRating(Integer.parseInt(ratingSlot.getText().trim()));
         }
@@ -112,7 +113,8 @@ public class MyFrame extends JFrame implements ActionListener {
             System.out.println("Invalid Rating");
         }
         currentPhoto = randomImage.randomImage();
-        imagePlaceHolder.setText(currentPhoto.toString());
+        imgLabel = new JLabel(new ImageIcon(currentPhoto.getPath()));
+        System.out.println(imgLabel);
         System.out.println(currentPhoto);
     }
 

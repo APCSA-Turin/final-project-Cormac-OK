@@ -1,8 +1,6 @@
 package com.example;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.net.URL;
 
@@ -41,6 +39,18 @@ public class RandomImage {
         }
         visitedIndices.add(index);
 
+        MarsPhoto toAdd = images.get(index);
+
+        try{
+            System.out.println(toAdd.getURL());
+            downloadUsingStream(toAdd.getURL(), "JavaAPIProject//src//main//java//com//example//data//" + toAdd.getId() + ".jpg");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        toAdd.setPath("JavaAPIProject//src//main//java//com//example//data//" + toAdd.getId() + ".jpg");
+
         return images.get(index);
     }
 
@@ -59,6 +69,25 @@ public class RandomImage {
                 ));
         }
         return photosObj;
+    }
+
+    private static void downloadUsingStream(String urlStr, String file) throws IOException{
+        URL url = new URL(urlStr);
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        // Set user-agent to mimic a real browser
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+        BufferedInputStream bis = new BufferedInputStream(url.openStream());
+        FileOutputStream fis = new FileOutputStream(file);
+        byte[] buffer = new byte[1024];
+        int count=0;
+        while((count = bis.read(buffer,0,1024)) != -1)
+        {
+            fis.write(buffer, 0, count);
+        }
+        fis.close();
+        bis.close();
     }
 
 

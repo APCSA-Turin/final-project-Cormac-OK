@@ -27,10 +27,6 @@ public class Test {
         }
         catch(Exception e){}
 
-        try{
-            downloadUsingNIO("http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00002/opgs/edr/ncam/NRA_397681339EDR_F0020000AUT_04096M_.JPG", "JavaAPIProject//src//main//java//com//example//data//nasaV3.JPG");
-        }
-        catch(Exception e){}
 
     }
 
@@ -73,17 +69,5 @@ public class Test {
         }
         fis.close();
         bis.close();
-    }
-
-    /**
-     * Digital Ocean
-     */
-    private static void downloadUsingNIO(String urlStr, String file) throws IOException {
-        URL url = new URL(urlStr);
-        ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        fos.close();
-        rbc.close();
     }
 }
