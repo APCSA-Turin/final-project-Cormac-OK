@@ -30,19 +30,7 @@ public class GUI{
         String address = rand.randomImage().getURL();
 
         JLabel imgLabel = new JLabel();
-        try {
-            BufferedImage img = ImageIO.read(new URL("https://images.dog.ceo/breeds/lhasa/n02098413_387.jpg"));
-            System.out.println(address);
-            System.out.println(img);
-
-            imgLabel.setIcon(new ImageIcon(img));
-//            imgLabel.setIcon(new javax.swing.ImageIcon(new URL(address)));
-        }
-        catch(Exception ex) {
-            System.out.println(ex);
-            ex.printStackTrace();
-
-        }
+        
 
         outputArea.setEditable(false);
 

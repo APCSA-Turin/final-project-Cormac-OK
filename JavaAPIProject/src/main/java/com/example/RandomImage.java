@@ -9,8 +9,8 @@ import org.json.JSONObject;
 
 public class RandomImage {
     private ArrayList<MarsPhoto> images;
-    private ArrayList<Integer> visitedIndices;
     private int day;
+    private ArrayList<MarsPhoto> history = new ArrayList<>();
 
     public RandomImage(int startDay){
         day = startDay-1;
@@ -20,7 +20,6 @@ public class RandomImage {
     public void newDay(){
         System.out.println("NEWDAY\n\n\n\n\n\n\n\n\n");
         day += 1;
-        visitedIndices = new ArrayList<>();
         try{
             images = parseJson(API.getData(day));
         }
@@ -30,28 +29,23 @@ public class RandomImage {
     }
 
     public MarsPhoto randomImage(){
-        if(visitedIndices.size() == images.size()){
+        if(images.size()==0){
             newDay();
         }
         int index = (int)(Math.random() * images.size());
-        while(visitedIndices.contains(index)){
-            index = (int)(Math.random() * images.size());
-        }
-        visitedIndices.add(index);
-
-        MarsPhoto toAdd = images.get(index);
+        
+        MarsPhoto image = images.remove(index);
+        history.add(image);
 
         try{
-            System.out.println(toAdd.getURL());
-            downloadUsingStream(toAdd.getURL(), "JavaAPIProject//src//main//java//com//example//data//" + toAdd.getId() + ".jpg");
+            downloadUsingStream(image.getURL(), "JavaAPIProject//src//main//java//com//example//data//" + image.getId() + ".jpg");
         }
         catch(Exception e){
             e.printStackTrace();
         }
+        image.setPath("JavaAPIProject//src//main//java//com//example//data//" + image.getId() + ".jpg");
 
-        toAdd.setPath("JavaAPIProject//src//main//java//com//example//data//" + toAdd.getId() + ".jpg");
-
-        return images.get(index);
+        return image;
     }
 
     public static ArrayList<MarsPhoto> parseJson(String data){

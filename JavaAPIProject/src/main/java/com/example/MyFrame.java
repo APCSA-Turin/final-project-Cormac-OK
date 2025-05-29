@@ -23,16 +23,15 @@ public class MyFrame extends JFrame implements ActionListener {
 
     private JPanel imageViewer = new JPanel(new BorderLayout());
     private JButton back = new JButton("Back");
-    // private JLabel imgLabel = new JLabel(new ImageIcon("JavaAPIProject\\src\\main\\java\\com\\example\\dog.jpg"));
-    private JLabel imgLabel = new JLabel();
 
-    private JPanel ratingPanel = new JPanel(new GridLayout(4,1));
+    private ImageIcon imageIcon = new ImageIcon();
+    private JLabel imgLabel = new JLabel(imageIcon);
+
+    private JPanel ratingPanel = new JPanel(new GridLayout(2,1));
     private JLabel ratingLabel = new JLabel("Enter a rating from 1-5:");
     private  JTextArea ratingSlot = new JTextArea("");
-    private JButton refresh = new JButton("Refresh");
     private  JButton nextPhotoButton = new JButton("Next Photo");
 
-    private JLabel testPic = new JLabel(new ImageIcon("com/example/data/49193.jpg"));
 
     private Image image;
 
@@ -55,8 +54,6 @@ public class MyFrame extends JFrame implements ActionListener {
         ratingSlot.setPreferredSize(new Dimension(50, 8));
         ratingPanel.add(ratingLabel, 0);
         ratingPanel.add(ratingSlot, 1);
-        ratingPanel.add(refresh, 2);
-        ratingPanel.add(testPic, 3);
 
         imageViewer.add(back, BorderLayout.PAGE_START);
         imageViewer.add(ratingPanel, BorderLayout.LINE_START);
@@ -73,7 +70,6 @@ public class MyFrame extends JFrame implements ActionListener {
         likedPhotosButton.addActionListener(this);
         statsButton.addActionListener(this);
         nextPhotoButton.addActionListener(this);
-        refresh.addActionListener(this);
 
         super.add(mainMenu);
         super.add(imageViewer);
@@ -101,8 +97,6 @@ public class MyFrame extends JFrame implements ActionListener {
             System.out.println("Next");
             newPhoto();
         }
-        else if(e.getActionCommand().equals("Refresh")){
-        }
     }
 
     public void newPhoto(){
@@ -112,14 +106,11 @@ public class MyFrame extends JFrame implements ActionListener {
         catch (Exception e){
             System.out.println("Invalid Rating");
         }
-        // currentPhoto = randomImage.randomImage();
-        // imgLabel = new JLabel(new ImageIcon(currentPhoto.getPath()));
+        currentPhoto = randomImage.randomImage();
 
-        ImageIcon image = new ImageIcon("JavaAPIProject\\src\\main\\java\\com\\example\\dog.jpg");
-        imgLabel = new JLabel(image);
-        imgLabel.setVisible(true);
-        imgLabel.repaint();
-        imageViewer.add(imgLabel, BorderLayout.CENTER);
+    
+        //"JavaAPIProject\\src\\main\\java\\com\\example\\dog.jpg"
+        imgLabel.setIcon(new ImageIcon(currentPhoto.getPath()));
         
         System.out.println("image:" + image);
         System.out.println("image label:" + imgLabel);
