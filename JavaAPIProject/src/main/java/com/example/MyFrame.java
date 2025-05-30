@@ -4,10 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import javax.imageio.ImageIO;
+import java.util.ArrayList;
 
 public class MyFrame extends JFrame implements ActionListener {
 
@@ -18,26 +15,32 @@ public class MyFrame extends JFrame implements ActionListener {
     private JPanel mainMenu = new JPanel(new GridLayout(3,2));
     private JButton browseRandomButton = new JButton("Browse Random");
     private JButton browseRecommendedButton = new JButton("Browse Recommended");
-    private JButton likedPhotosButton = new JButton("View Liked Photos");
+    private JButton historyButton = new JButton("View History");
     private JButton statsButton = new JButton("View Statistics");
 
     private JPanel imageViewer = new JPanel(new BorderLayout());
     private JButton back = new JButton("Back");
 
-    private ImageIcon imageIcon = new ImageIcon();
-    private JLabel imgLabel = new JLabel(imageIcon);
+    private JLabel imgLabel = new JLabel(new ImageIcon());
 
     private JPanel ratingPanel = new JPanel(new GridLayout(2,1));
     private JLabel ratingLabel = new JLabel("Enter a rating from 1-5:");
     private  JTextArea ratingSlot = new JTextArea("");
     private  JButton nextPhotoButton = new JButton("Next Photo");
 
+    private JPanel historyViewer = new JPanel(new BorderLayout());
+    private JPanel bottomBar = new JPanel(new GridLayout(1,2));
+    private JButton goBackButton = new JButton("<<");
+    private JButton goForwardButton = new JButton(">>");
+    private JLabel historyImgLabel = new JLabel(new ImageIcon());
+    private JLabel rating = new JLabel(); 
 
-    private Image image;
-
+    
 
     private RandomImage randomImage = new RandomImage(2);
     private MarsPhoto currentPhoto;
+
+    private ArrayList<MarsPhoto> history = randomImage.getHistory();
 
     public MyFrame(){
         super("RoverPics");
@@ -47,9 +50,14 @@ public class MyFrame extends JFrame implements ActionListener {
         mainMenu.setSize(super.getSize());
         mainMenu.add(browseRandomButton);
         mainMenu.add(browseRecommendedButton);
-        mainMenu.add(likedPhotosButton);
+        mainMenu.add(historyButton);
         mainMenu.add(statsButton);
-        mainMenu.add(imgLabel);
+
+        bottomBar.add(goBackButton);
+        bottomBar.add(goForwardButton);
+        historyViewer.add(bottomBar, BorderLayout.PAGE_END);
+        historyViewer.add(rating);
+        historyViewer.add(back);
 
         ratingSlot.setPreferredSize(new Dimension(50, 8));
         ratingPanel.add(ratingLabel, 0);
@@ -60,42 +68,49 @@ public class MyFrame extends JFrame implements ActionListener {
         imageViewer.add(nextPhotoButton, BorderLayout.LINE_END);
         imageViewer.add(imgLabel, BorderLayout.CENTER);
 
-        imageViewer.setVisible(false);
+
 
 
 
         back.addActionListener(this);
         browseRandomButton.addActionListener(this);
         browseRecommendedButton.addActionListener(this);
-        likedPhotosButton.addActionListener(this);
+        historyButton.addActionListener(this);
         statsButton.addActionListener(this);
         nextPhotoButton.addActionListener(this);
+        historyButton.addActionListener(this);
 
-        super.add(mainMenu);
-        super.add(imageViewer);
+        // super.add(mainMenu);
+        // super.add(imageViewer);
+        // super.add(historyViewer);
 
-        System.out.println(mainMenu.isVisible());
-        System.out.println(mainMenu.getComponent(0));
+        // imageViewer.setVisible(false);
+        // historyViewer.setVisible(false);
 
         super.setVisible(true);
-        super.repaint();
+
+        super.setContentPane(mainMenu);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Back")) {
             imageViewer.setVisible(false);
+            historyViewer.setVisible(false);
             mainMenu.setVisible(true);
-            mainMenu.repaint();
         }
         else if(e.getActionCommand().equals("Browse Random")){
             mainMenu.setVisible(false);
             imageViewer.setVisible(true);
-            imageViewer.repaint();
+            newPhoto();
         }
         else if(e.getActionCommand().equals("Next Photo")){
-            System.out.println("Next");
             newPhoto();
+        }
+        else if(e.getActionCommand().equals("View History")){
+            mainMenu.setVisible(false);
+            historyViewer.setVisible(true);
+            historyPhoto(0);
         }
     }
 
@@ -109,12 +124,12 @@ public class MyFrame extends JFrame implements ActionListener {
         currentPhoto = randomImage.randomImage();
 
     
-        //"JavaAPIProject\\src\\main\\java\\com\\example\\dog.jpg"
         imgLabel.setIcon(new ImageIcon(currentPhoto.getPath()));
         
-        System.out.println("image:" + image);
-        System.out.println("image label:" + imgLabel);
-        System.out.println(currentPhoto);
+    }
+
+    public void historyPhoto(int index){
+        historyImgLabel.setIcon(new ImageIcon(history.get(index).getPath()));
     }
 
 }

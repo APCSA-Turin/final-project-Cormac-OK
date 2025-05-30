@@ -84,6 +84,10 @@ public class RandomImage {
         bis.close();
     }
 
+    public ArrayList<MarsPhoto> getHistory() {
+        return history;
+    }
+
 
 
 }
