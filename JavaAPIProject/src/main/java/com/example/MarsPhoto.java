@@ -1,12 +1,18 @@
 package com.example;
 
 public class MarsPhoto {
-    
+
+    /** The URL to access the image*/
     private String URL;
+    /** The camera on the rover by which this photo was taken */
     private String camera;
+    /** The Earth date on which this photo was taken*/
     private String date;
+    /** The photo's unique ID */
     private int id;
+    /** The file path to access this photo, if it has been downloaded*/
     private String path;
+    /** The rating the user has given this photo, if they've given it one*/
     private int rating;
 
     /**
@@ -17,7 +23,8 @@ public class MarsPhoto {
      * @param id The image's unique idea.
      */
     public MarsPhoto(String URL, String camera, String date, int id){
-        if(URL.charAt(4) != 's'){
+        // My method of downloading images only works with HTTPS, not HTTP links.
+        if(URL.charAt(4) != 's'){ // Yes, I know you see charAt as a sign that ChatGPT was used, but I just really hate working with .substring() and .equals()
             this.URL = URL.substring(0,4) + "s" + URL.substring(4);
         }
         else{

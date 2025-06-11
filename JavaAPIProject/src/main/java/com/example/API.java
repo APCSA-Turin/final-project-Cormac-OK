@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 
 public class API {
     /**
-     * Gets a JSON object with all the data
+     * Gets a JSON object with every photo form the inputted day
      * @param sol the date requested
-     * @return
+     * @return A String containing JSON data
      * @throws Exception
      */
     public static String getData(int sol) throws Exception {
