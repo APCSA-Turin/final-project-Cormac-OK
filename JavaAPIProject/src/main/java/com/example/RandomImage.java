@@ -102,16 +102,16 @@ public class RandomImage {
 
         // A stream of bytes containing the data of the image
         BufferedInputStream bis = new BufferedInputStream(url.openStream());
-        FileOutputStream fis = new FileOutputStream(file);
+        FileOutputStream fos = new FileOutputStream(file);
         byte[] buffer = new byte[1024];
         int count=0;
         // Goes through the bis, reading it and writing it to target address
         while((count = bis.read(buffer,0,1024)) != -1)
         {
-            fis.write(buffer, 0, count);
+            fos.write(buffer, 0, count);
         }
         // Closes streams to prevent memory leak
-        fis.close();
+        fos.close();
         bis.close();
     }
 
